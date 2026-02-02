@@ -460,8 +460,8 @@ const LifetimeCostChart = ({ data }) => {
   const geo10Year = data.geothermal.upfrontCost + calcInflatedCost(data.geothermal.annualCost, 10)
   const geo30Year = data.geothermal.upfrontCost + calcInflatedCost(data.geothermal.annualCost, 30)
   
-  // Traditional: fuel + electric + maintenance (~$300/yr)
-  const tradAnnualWithMaint = data.conventional.annualCost + 300
+  // Traditional: fuel + electric + maintenance ($200/yr base, all with 5% inflation)
+  const tradAnnualWithMaint = data.conventional.annualCost + 200
   const trad10Year = data.conventional.upfrontCost + calcInflatedCost(tradAnnualWithMaint, 10)
   const trad30Year = data.conventional.upfrontCost + calcInflatedCost(tradAnnualWithMaint, 30) + data.conventional.replacementCost
   
@@ -496,7 +496,7 @@ const LifetimeCostChart = ({ data }) => {
   return (
     <div className="space-y-6">
       <h4 className="font-semibold text-gray-900">10 & 30-Year Total Cost Comparison</h4>
-      <p className="text-xs text-gray-500">Both systems include 5% annual electricity inflation. Traditional includes maintenance ($300/yr).</p>
+      <p className="text-xs text-gray-500">Both systems include 5% annual inflation. Traditional includes maintenance ($200/yr base + inflation).</p>
       
       {/* Horizontal Bar Chart */}
       <div className="bg-gray-50 rounded-lg p-4">
@@ -605,8 +605,8 @@ const LifetimeCostChart = ({ data }) => {
               <span>${Math.round(data.conventional.annualCost).toLocaleString()}/yr</span>
             </div>
             <div className="flex justify-between">
-              <span>Annual Maintenance:</span>
-              <span>$300/yr</span>
+              <span>Annual Maint (yr 1):</span>
+              <span>$200/yr</span>
             </div>
             <div className="flex justify-between">
               <span>Replace @15yr:</span>
@@ -648,8 +648,8 @@ const ThreeMilestoneComparison = ({ data }) => {
     return total
   }
   
-  // Traditional: fuel + electric + maintenance ($300/yr)
-  const tradAnnualTotal = (data.tradAnnualFuel || 0) + (data.tradAnnualElectric || 0) + 300
+  // Traditional: fuel + electric + maintenance ($200/yr base, all with 5% inflation)
+  const tradAnnualTotal = (data.tradAnnualFuel || 0) + (data.tradAnnualElectric || 0) + 200
   
   // Geo with solar uses minimal electricity - also apply 5% inflation
   const geoAnnual = data.geoAnnualOperating || 500
@@ -1710,13 +1710,13 @@ const CalculatorPage = () => {
                         </div>
                         <div className="flex justify-between text-sm">
                           <span className="text-gray-600">Maintenance</span>
-                          <span className="font-medium text-red-700">$25/mo</span>
+                          <span className="font-medium text-red-700">~$17/mo</span>
                         </div>
                         <hr className="border-red-200" />
                         <div className="flex justify-between">
                           <span className="font-semibold text-red-800">Current Total</span>
                           <span className="font-bold text-red-700 text-lg">
-                            ${Math.round(((results?.threeMilestoneData?.tradAnnualFuel || 2700) + (results?.threeMilestoneData?.tradAnnualElectric || 2400) + 300) / 12)}/mo
+                            ${Math.round(((results?.threeMilestoneData?.tradAnnualFuel || 2700) + (results?.threeMilestoneData?.tradAnnualElectric || 2400) + 200) / 12)}/mo
                           </span>
                         </div>
                         <div className="text-xs text-red-600 mt-2">+ 5% annual price increases</div>
@@ -1738,7 +1738,7 @@ const CalculatorPage = () => {
                         <div className="flex justify-between">
                           <span className="font-semibold text-purple-800">Fixed Monthly</span>
                           <span className="font-bold text-purple-700 text-lg">
-                            ${Math.round(((results?.threeMilestoneData?.tradAnnualFuel || 2700) + (results?.threeMilestoneData?.tradAnnualElectric || 2400) + 300) * 0.9 / 12)}/mo*
+                            ${Math.round(((results?.threeMilestoneData?.tradAnnualFuel || 2700) + (results?.threeMilestoneData?.tradAnnualElectric || 2400) + 200) * 0.9 / 12)}/mo*
                           </span>
                         </div>
                         <div className="text-xs text-purple-600 mt-2">*10% savings vs current bills, locked rate</div>
@@ -1793,7 +1793,7 @@ const CalculatorPage = () => {
                           <td className="py-3 px-2 text-gray-600">Monthly Payment</td>
                           <td className="text-center py-3 px-2">$0</td>
                           <td className="text-center py-3 px-2">$0</td>
-                          <td className="text-center py-3 px-2 bg-purple-50">~${Math.round(((results?.threeMilestoneData?.tradAnnualFuel || 2700) + (results?.threeMilestoneData?.tradAnnualElectric || 2400) + 300) * 0.9 / 12)}</td>
+                          <td className="text-center py-3 px-2 bg-purple-50">~${Math.round(((results?.threeMilestoneData?.tradAnnualFuel || 2700) + (results?.threeMilestoneData?.tradAnnualElectric || 2400) + 200) * 0.9 / 12)}</td>
                         </tr>
                         <tr className="border-b border-gray-100">
                           <td className="py-3 px-2 text-gray-600">Maintenance</td>
